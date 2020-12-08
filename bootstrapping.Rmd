@@ -190,7 +190,7 @@ airbnb_boot_results =
   drop_na(stars) %>% 
   bootstrap(1000, id = "strap_number") %>% 
   mutate(
-    models = map(.x = strap, ~lm(y ~ x, data = .x) ),
+    models = map(.x = strap, ~lm(price ~ stars, data = .x)),
     results = map(models, broom::tidy)) %>% 
   select(strap_number, results) %>% 
   unnest(results) 
