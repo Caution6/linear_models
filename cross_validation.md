@@ -183,3 +183,56 @@ cv_df %>%
 ```
 
 <img src="cross_validation_files/figure-gfm/unnamed-chunk-12-1.png" width="90%" />
+
+Compute averages…
+
+``` r
+cv_df %>% 
+  select(starts_with("rmse")) %>% 
+  pivot_longer(
+    everything(),
+    names_to = "model",
+    values_to = "rmse",
+    names_prefix = "rmse_"
+  ) %>% 
+  group_by(model) %>% 
+  summarize(avg_rmse = mean(rmse))
+```
+
+    ## `summarise()` ungrouping output (override with `.groups` argument)
+
+    ## # A tibble: 3 x 2
+    ##   model  avg_rmse
+    ##   <chr>     <dbl>
+    ## 1 linear    0.718
+    ## 2 smooth    0.289
+    ## 3 wiggly    0.354
+
+## Try on a real dataset.
+
+import my data
+
+``` r
+child_growth = 
+  read_csv("./data/nepalese_children.csv")
+```
+
+    ## 
+    ## -- Column specification --------------------------------------------------------
+    ## cols(
+    ##   age = col_double(),
+    ##   sex = col_double(),
+    ##   weight = col_double(),
+    ##   height = col_double(),
+    ##   armc = col_double()
+    ## )
+
+weight vs arm circumference
+
+``` r
+child_growth %>% 
+  ggplot(aes(x = weight, y = armc)) + 
+  geom_point(alpha = .5)
+```
+
+<img src="cross_validation_files/figure-gfm/unnamed-chunk-15-1.png" width="90%" />

@@ -165,3 +165,20 @@ cv_df %>%
   summarize(avg_rmse = mean(rmse))
 ```
 
+## Try on a real dataset.
+
+import my data
+
+```{r}
+child_growth = 
+  read_csv("./data/nepalese_children.csv")
+```
+
+weight vs arm circumference
+
+```{r}
+child_growth %>% 
+  ggplot(aes(x = weight, y = armc)) + 
+  geom_point(alpha = .5)
+```
+
